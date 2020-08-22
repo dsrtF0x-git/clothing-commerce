@@ -24,7 +24,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+      <Header currentUser={currentUser} />
       <Switch>
         <Route exact path="/" component={Homepage} />
         <Route exact path="/signIn" component={SignInAndSignUp} />
