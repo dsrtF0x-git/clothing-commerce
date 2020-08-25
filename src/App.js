@@ -13,10 +13,18 @@ function App() {
   let unSubscribeFromAuth = null;
 
   useEffect(() => {
-    unSubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
-      // setCurrentUser(user);
-      createUserProfileDocument(user);
-      console.log(user);
+    unSubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        userRef.onSnapshot((snapShot) => {
+          setCurrentUser({
+            id: snapShot.id,
+            ...snapShot.data(),
+          });
+        });
+      } else {
+        setCurrentUser(userAuth);
+      }
     });
 
     return () => {
