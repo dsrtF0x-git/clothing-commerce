@@ -7,42 +7,92 @@ import SignInAndSignUp from "./components/sign-in-sign-up/SignInAndSignUp";
 import Header from "./components/header/Header";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
-function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+// function App() {
+//   const [currentUser, setCurrentUser] = useState(null);
 
-  let unSubscribeFromAuth = null;
+//   let unsubscribeFromAuth = null;
 
-  useEffect(() => {
-    unSubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+//   useEffect(() => {
+//     unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+//       if (userAuth) {
+//         const userRef = await createUserProfileDocument(userAuth);
+
+//         userRef.onSnapshot((snapShot) => {
+//           setCurrentUser({
+//             id: snapShot.id,
+//             ...snapShot.data(),
+//           });
+//         });
+//       }
+//       setCurrentUser({
+//         currentUser: userAuth,
+//       });
+//     });
+
+//     return function cleanUp() {
+//       unsubscribeFromAuth();
+//     };
+//   }, [unsubscribeFromAuth]);
+
+//   return (
+//     <div>
+//       <Header currentUser={currentUser} />
+//       <Switch>
+//         <Route exact path="/" component={Homepage} />
+//         <Route path="/shop" component={Shop} />
+//         <Route path="/signin" component={SignInAndSignUp} />
+//       </Switch>
+//     </div>
+//   );
+// }
+
+class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      currentUser: null,
+    };
+  }
+
+  unsubscribeFromAuth = null;
+
+  componentDidMount() {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
+
         userRef.onSnapshot((snapShot) => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data(),
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data(),
+            },
           });
-          console.log(currentUser);
         });
-      } else {
-        setCurrentUser(userAuth);
       }
+
+      this.setState({ currentUser: userAuth });
+      console.log(this.state.currentUser);
     });
+  }
 
-    return () => {
-      unSubscribeFromAuth();
-    };
-  }, []);
+  componentWillUnmount() {
+    this.unsubscribeFromAuth();
+  }
 
-  return (
-    <div className="App">
-      <Header currentUser={currentUser} />
-      <Switch>
-        <Route exact path="/" component={Homepage} />
-        <Route exact path="/signIn" component={SignInAndSignUp} />
-        <Route exact path="/shop" component={Shop} />
-      </Switch>
-    </div>
-  );
+  render() {
+    return (
+      <div>
+        <Header currentUser={this.state.currentUser} />
+        <Switch>
+          <Route exact path="/" component={Homepage} />
+          <Route path="/shop" component={Shop} />
+          <Route path="/signin" component={SignInAndSignUp} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;
