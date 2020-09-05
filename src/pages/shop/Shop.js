@@ -3,7 +3,7 @@ import { shopData } from "./shopData";
 import PreviewCollection from "../../components/previewCollection/PreviewCollection";
 
 function Shop() {
-  const [collections, setCollections] = useState(shopData);
+  const [collections] = useState(shopData);
 
   return (
     <div className="shop-page">

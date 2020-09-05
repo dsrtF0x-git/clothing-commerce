@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Homepage from "./pages/homepage/Homepage";
@@ -8,7 +8,6 @@ import SignInAndSignUp from "./components/sign-in-sign-up/SignInAndSignUp";
 import Header from "./components/header/Header";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { setCurrentUser } from "./redux/user/user.actions";
-import SignIn from "./components/sign-in-sign-up/SignIn";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -22,14 +21,13 @@ class App extends React.Component {
 
         userRef.onSnapshot((snapShot) => {
           setCurrentUser({
-            currentUser: {
-              id: snapShot.id,
-              ...snapShot.data(),
-            },
+            id: snapShot.id,
+            ...snapShot.data(),
           });
         });
       }
-      setCurrentUser({ currentUser: userAuth });
+
+      setCurrentUser(userAuth);
     });
   }
 
