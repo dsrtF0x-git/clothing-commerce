@@ -9,7 +9,7 @@
   background-color: black;
   color: white;
   text-transform: uppercase;
-  font-family: "Open Sans Condensed";
+  font-family: 'Open Sans Condensed';
   font-weight: bolder;
   border: none;
   cursor: pointer;
@@ -35,7 +35,6 @@
   &.inverted {
     background-color: black;
     color: white;
-
     border: 1px solid black;
 
     &:hover {
