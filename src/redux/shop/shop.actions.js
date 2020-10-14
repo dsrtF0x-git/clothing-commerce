@@ -8,12 +8,12 @@ export const fetchCollectionStart = () => ({
   type: ShopActionsTypes.FETCH_COLLECTIONS_START,
 });
 
-const fetchCollectionsSuccess = (collectionsMap) => ({
+export const fetchCollectionsSuccess = (collectionsMap) => ({
   type: ShopActionsTypes.FETCH_COLLECTIONS_SUCCESS,
   payload: collectionsMap,
 });
 
-const fetchCollectionsFailure = (errorMessage) => ({
+export const fetchCollectionsFailure = (errorMessage) => ({
   type: ShopActionsTypes.FETCH_COLLECTIONS_FAILURE,
   payload: errorMessage,
 });
