@@ -6,10 +6,7 @@ import Shop from './pages/shop/Shop';
 import { connect } from 'react-redux';
 import SignInAndSignUp from './components/sign-in-sign-up/SignInAndSignUp';
 import Header from './components/header/Header';
-import { setCurrentUser } from './redux/user/user.actions';
-import { createStructuredSelector } from 'reselect';
 import Checkout from './pages/checkout/Checkout';
-import { selectCurrentUser } from './redux/user/user.selectors';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -39,12 +36,4 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, null)(App);
