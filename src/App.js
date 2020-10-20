@@ -7,9 +7,15 @@ import { connect } from 'react-redux';
 import SignInAndSignUp from './components/sign-in-sign-up/SignInAndSignUp';
 import Header from './components/header/Header';
 import Checkout from './pages/checkout/Checkout';
+import { checkUserSession } from './redux/user/user.actions';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
+
+  componentDidMount() {
+    const { checkUserSession } = this.props;
+    checkUserSession();
+  }
 
   componentWillUnmount() {
     this.unsubscribeFromAuth();
@@ -36,4 +42,8 @@ class App extends React.Component {
   }
 }
 
-export default connect(null, null)(App);
+const mapDispatchToProps = (dispatch) => ({
+  checkUserSession: () => dispatch(checkUserSession()),
+});
+
+export default connect(null, mapDispatchToProps)(App);
