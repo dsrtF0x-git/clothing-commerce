@@ -21,7 +21,7 @@ function StripeButton({ price }) {
       })
       .catch((error) => {
         console.log(error, 'payment error');
-        alert('There is an issue with your payment.');
+        alert('There is an issue with your payment!');
       });
   };
   return (
